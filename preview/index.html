@@ -38,6 +38,41 @@
             <textarea id="approval-text" rows="6" spellcheck="false"></textarea>
           </label>
           <div id="approval-out" class="output" hidden></div>
+
+          <div id="approval-business" class="output" hidden>
+            <div class="panel-head" style="margin-bottom: 0.75rem;">
+              <h2 style="margin: 0; font-size: 1.05rem;">业务模拟（审批流执行）</h2>
+              <div class="actions">
+                <button type="button" class="btn" id="approval-reset">重置业务模拟</button>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 0.2rem;">
+              <label class="field grow" style="margin-bottom: 0.75rem;">
+                <span>当前角色</span>
+                <select id="approval-role">
+                  <option value="applicant">申请人</option>
+                  <option value="manager">主管</option>
+                  <option value="hr">人事</option>
+                  <option value="finance">财务</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="actions" style="margin-bottom: 0.75rem;">
+              <button type="button" class="btn" id="approval-save">保存</button>
+              <button type="button" class="btn primary" id="approval-submit">提交</button>
+              <button type="button" class="btn primary" id="approval-approve">审批通过</button>
+              <button type="button" class="btn" id="approval-reject">驳回</button>
+            </div>
+
+            <label class="field">
+              <span>表单 JSON（用于校验）</span>
+              <textarea id="approval-form-json" rows="7" spellcheck="false"></textarea>
+            </label>
+
+            <div id="approval-business-out" class="output" hidden></div>
+          </div>
         </section>
 
         <section id="panel-playback" class="panel" role="tabpanel" hidden>

@@ -32,7 +32,8 @@ export function runWorkflowAgent(requirementOutput) {
     permissionSketch: nodes.map((n) => ({
       node: n.id,
       rolesAllowed: [n.role],
-      actions: n.id === 'draft' ? ['edit', 'save'] : ['view', 'approve', 'reject'],
+      // draft 阶段允许发起提交；其余阶段允许审批通过/驳回
+      actions: n.id === 'draft' ? ['edit', 'save', 'submit'] : ['view', 'approve', 'reject'],
     })),
   };
 }
