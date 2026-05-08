@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 多 Agent 流水线 — 预览</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="hero">
+        <h1>多 Agent 工程流水线</h1>
+        <p class="lede">
+          规则模拟长链推理：需求解析 → Schema → 代码草稿 → 流程；播放策略；性能扫描。无后端、无 API Key，本地可预览。
+        </p>
+      </header>
+
+      <nav class="tabs" role="tablist" aria-label="场景">
+        <button type="button" class="tab is-active" data-tab="approval" role="tab" aria-selected="true">
+          审批 / 表单
+        </button>
+        <button type="button" class="tab" data-tab="playback" role="tab" aria-selected="false">
+          智能播放
+        </button>
+        <button type="button" class="tab" data-tab="performance" role="tab" aria-selected="false">
+          性能治理
+        </button>
+      </nav>
+
+      <main>
+        <section id="panel-approval" class="panel is-visible" role="tabpanel">
+          <div class="panel-head">
+            <h2>场景一：审批与动态表单</h2>
+            <button type="button" class="btn primary" id="run-approval">运行流水线</button>
+          </div>
+          <label class="field">
+            <span>业务需求（自然语言）</span>
+            <textarea id="approval-text" rows="6" spellcheck="false"></textarea>
+          </label>
+          <div id="approval-out" class="output" hidden></div>
+        </section>
+
+        <section id="panel-playback" class="panel" role="tabpanel" hidden>
+          <div class="panel-head">
+            <h2>场景二：播放行为策略</h2>
+            <button type="button" class="btn primary" id="run-playback">推断策略</button>
+          </div>
+          <div class="row">
+            <label class="field grow">
+              <span>学习目标</span>
+              <select id="playback-goal">
+                <option value="effective_learning">有效学习（默认）</option>
+                <option value="strict_compliance">严格合规</option>
+              </select>
+            </label>
+          </div>
+          <label class="field">
+            <span>事件 JSON 数组（seek / ratechange）</span>
+            <textarea id="playback-events" rows="10" spellcheck="false"></textarea>
+          </label>
+          <div id="playback-out" class="output" hidden></div>
+        </section>
+
+        <section id="panel-performance" class="panel" role="tabpanel" hidden>
+          <div class="panel-head">
+            <h2>场景三：接口与大字段扫描</h2>
+            <div class="actions">
+              <button type="button" class="btn" id="reset-performance-sample">恢复示例 JSON</button>
+              <button type="button" class="btn" id="clear-performance-json">清空（内置大字段）</button>
+              <button type="button" class="btn primary" id="run-performance">扫描</button>
+            </div>
+          </div>
+          <label class="field">
+            <span>模拟接口 JSON（<strong>清空</strong>后点「扫描」使用内置大 Base64 演示）</span>
+            <textarea id="performance-json" rows="12" spellcheck="false"></textarea>
+          </label>
+          <div id="performance-out" class="output" hidden></div>
+        </section>
+      </main>
+
+      <footer class="foot">
+        <span>CLI：<code>npm run demo:all</code></span>
+        <span>预览：<code>npm run dev</code></span>
+      </footer>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

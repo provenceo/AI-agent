@@ -20,15 +20,21 @@ export function runPlaybackPipeline(input) {
   return { playback: runPlaybackAgent(input) };
 }
 
-export function runPerformancePipeline() {
+function defaultPerformanceSample() {
   const tinyPngBase64 =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
   const huge = tinyPngBase64 + 'A'.repeat(120_000);
-  const apiSample = {
+  return {
     userId: 'u-1001',
     displayName: '演示用户',
     avatarBase64: huge,
     training: { coverBase64: huge },
   };
-  return { performance: runPerformanceAgent(apiSample) };
+}
+
+/** @param {unknown} [apiSample] 自定义接口样本；省略则用内置大 Base64 演示数据。 */
+export function runPerformancePipeline(apiSample) {
+  const sample =
+    apiSample != null && typeof apiSample === 'object' ? apiSample : defaultPerformanceSample();
+  return { performance: runPerformanceAgent(sample) };
 }
