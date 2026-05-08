@@ -1,0 +1,68 @@
+{
+  "processName": "DingTalk 审批流结构树",
+  "root": {
+    "id": "draft",
+    "name": "填写",
+    "role": "applicant",
+    "approver": [
+      "applicant"
+    ],
+    "actions": [
+      "submit"
+    ],
+    "children": [
+      {
+        "id": "submit",
+        "name": "提交",
+        "role": "applicant",
+        "approver": [
+          "applicant"
+        ],
+        "actions": [
+          "approve",
+          "reject"
+        ],
+        "children": [
+          {
+            "id": "manager",
+            "name": "主管审批",
+            "role": "manager",
+            "approver": [
+              "manager"
+            ],
+            "actions": [
+              "approve",
+              "reject"
+            ],
+            "children": [
+              {
+                "id": "hr",
+                "name": "人事归档",
+                "role": "hr",
+                "approver": [
+                  "hr"
+                ],
+                "actions": [
+                  "approve",
+                  "reject"
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "rootId": "draft",
+    "nodeCount": 4,
+    "nodeIds": [
+      "draft",
+      "submit",
+      "manager",
+      "hr"
+    ]
+  }
+}
+
