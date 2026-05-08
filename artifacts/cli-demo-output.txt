@@ -1,0 +1,279 @@
+# Generated: 2026-05-08T01:13Z
+# Command: npm run demo:all
+
+
+> ai-engineering-demo@1.0.0 demo:all
+> node src/run.mjs --scenario all
+
+
+================================================================
+场景一：审批 / 动态表单 — 多 Agent 长链推理（规则模拟）
+================================================================
+{
+  "requirement": {
+    "stage": "requirement",
+    "summary": "做一个请假审批：需要申请人、请假天数、事由和附件；先主管审批，再人事归档。",
+    "fields": [
+      {
+        "name": "applicantName",
+        "type": "string",
+        "required": true,
+        "hint": "申请人"
+      },
+      {
+        "name": "leaveDays",
+        "type": "number",
+        "required": true,
+        "hint": "请假天数"
+      },
+      {
+        "name": "reason",
+        "type": "string",
+        "required": true,
+        "hint": "事由"
+      },
+      {
+        "name": "attachments",
+        "type": "file[]",
+        "required": false,
+        "hint": "附件"
+      }
+    ],
+    "flowHints": {
+      "needsManager": true,
+      "needsHr": true,
+      "needsFinance": false
+    }
+  },
+  "schema": {
+    "stage": "schema",
+    "jsonSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "applicantName": {
+          "type": "string",
+          "description": "申请人"
+        },
+        "leaveDays": {
+          "type": "number",
+          "description": "请假天数"
+        },
+        "reason": {
+          "type": "string",
+          "description": "事由"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": "附件"
+        }
+      },
+      "required": [
+        "applicantName",
+        "leaveDays",
+        "reason"
+      ]
+    },
+    "validationRules": [
+      {
+        "field": "applicantName",
+        "rules": [
+          {
+            "kind": "required",
+            "field": "applicantName"
+          }
+        ]
+      },
+      {
+        "field": "leaveDays",
+        "rules": [
+          {
+            "kind": "required",
+            "field": "leaveDays"
+          },
+          {
+            "kind": "range",
+            "field": "leaveDays",
+            "min": 0.5,
+            "max": 365
+          }
+        ]
+      },
+      {
+        "field": "reason",
+        "rules": [
+          {
+            "kind": "required",
+            "field": "reason"
+          }
+        ]
+      },
+      {
+        "field": "attachments",
+        "rules": []
+      }
+    ]
+  },
+  "codegen": {
+    "stage": "codegen",
+    "vueSnippet": "<template>\n<nut-form :model-value=\"form\">\n  <nut-form-item label=\"申请人\"><nut-input v-model=\"form.applicantName\" /></nut-form-item>\n  <nut-form-item label=\"请假天数\"><nut-input-number v-model=\"form.leaveDays\" /></nut-form-item>\n  <nut-form-item label=\"事由\"><nut-input v-model=\"form.reason\" /></nut-form-item>\n  <nut-form-item label=\"附件\"><nut-uploader v-model=\"form.attachments\" /></nut-form-item>\n</nut-form>\n</template>",
+    "javaDtoSnippet": "public class ApprovalFormDTO {\n    private String applicantName; // 申请人\n    private BigDecimal leaveDays; // 请假天数\n    private String reason; // 事由\n    private List<String> attachments; // 附件\n}",
+    "typescriptTypes": "export interface ApprovalForm {\n  applicantName: string;\n  leaveDays: number;\n  reason: string;\n  attachments: string[];\n}"
+  },
+  "workflow": {
+    "stage": "workflow",
+    "bpmnLike": {
+      "nodes": [
+        {
+          "id": "draft",
+          "name": "填写",
+          "role": "applicant",
+          "order": 0
+        },
+        {
+          "id": "submit",
+          "name": "提交",
+          "role": "applicant",
+          "order": 1
+        },
+        {
+          "id": "manager",
+          "name": "主管审批",
+          "role": "manager",
+          "order": 2
+        },
+        {
+          "id": "hr",
+          "name": "人事归档",
+          "role": "hr",
+          "order": 3
+        }
+      ],
+      "transitions": [
+        {
+          "from": "draft",
+          "to": "submit",
+          "on": "approve"
+        },
+        {
+          "from": "submit",
+          "to": "manager",
+          "on": "approve"
+        },
+        {
+          "from": "manager",
+          "to": "hr",
+          "on": "approve"
+        }
+      ]
+    },
+    "permissionSketch": [
+      {
+        "node": "draft",
+        "rolesAllowed": [
+          "applicant"
+        ],
+        "actions": [
+          "edit",
+          "save"
+        ]
+      },
+      {
+        "node": "submit",
+        "rolesAllowed": [
+          "applicant"
+        ],
+        "actions": [
+          "view",
+          "approve",
+          "reject"
+        ]
+      },
+      {
+        "node": "manager",
+        "rolesAllowed": [
+          "manager"
+        ],
+        "actions": [
+          "view",
+          "approve",
+          "reject"
+        ]
+      },
+      {
+        "node": "hr",
+        "rolesAllowed": [
+          "hr"
+        ],
+        "actions": [
+          "view",
+          "approve",
+          "reject"
+        ]
+      }
+    ]
+  }
+}
+
+================================================================
+场景二：智能播放 — 根据行为事件推断控制策略
+================================================================
+{
+  "playback": {
+    "stage": "playback",
+    "inferredPolicy": {
+      "dragMode": "backward_only",
+      "maxRate": 1.5,
+      "persistProgress": true,
+      "syncAcrossDevices": true
+    },
+    "signals": {
+      "forwardSkips": 2,
+      "rapidSeeks": 2,
+      "abnormalSpeed": 1
+    },
+    "reasons": [
+      "检测到 2 次大幅向前跳转",
+      "检测到 2 次快速拖动",
+      "检测到 1 次异常倍速"
+    ]
+  }
+}
+
+================================================================
+场景三：性能治理 — 识别大 Base64 并给出 URL 化建议
+================================================================
+{
+  "performance": {
+    "stage": "performance",
+    "issues": [
+      {
+        "kind": "large_base64",
+        "path": "$.avatarBase64",
+        "approxBytes": 90088
+      },
+      {
+        "kind": "large_base64",
+        "path": "$.training.coverBase64",
+        "approxBytes": 90088
+      }
+    ],
+    "recommendations": [
+      {
+        "action": "migrate_to_object_storage",
+        "path": "$.avatarBase64",
+        "detail": "将 Base64 改为上传后返回 URL；列表接口只返回缩略图 URL 与 metadata"
+      },
+      {
+        "action": "migrate_to_object_storage",
+        "path": "$.training.coverBase64",
+        "detail": "将 Base64 改为上传后返回 URL；列表接口只返回缩略图 URL 与 metadata"
+      }
+    ]
+  }
+}

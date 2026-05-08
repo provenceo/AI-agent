@@ -1,0 +1,8 @@
+GitHub 仓库：https://github.com/provenceo/AI-agent
+
+在线演示（需先在仓库 Settings → Pages → Build and deployment → Source 选「GitHub Actions」，推送 main 后等待部署完成）：
+https://provenceo.github.io/AI-agent/
+
+终端完整日志见同目录：cli-demo-output.txt（生成命令：npm run demo:all）
+
+录屏 / 截图建议：本地执行 npm run dev，依次切换「审批/表单」「智能播放」「性能治理」并点击运行，可展示 Agent 流水线与浏览器预览。
