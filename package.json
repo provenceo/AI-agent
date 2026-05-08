@@ -1,0 +1,17 @@
+{
+  "name": "ai-engineering-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal runnable multi-agent pipeline (rule-based stubs, no API keys)",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/run.mjs",
+    "demo:approval": "node src/run.mjs --scenario approval",
+    "demo:playback": "node src/run.mjs --scenario playback",
+    "demo:performance": "node src/run.mjs --scenario performance",
+    "demo:all": "node src/run.mjs --scenario all"
+  }
+}
