@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
 /** GitHub 项目站路径为 /<repo>/，CI 里设置 GITHUB_PAGES_BASE=/AI-agent/ 等形式 */
 const base =
@@ -17,6 +18,7 @@ export default defineConfig({
     outDir: fileURLToPath(new URL('./dist', import.meta.url)),
     emptyOutDir: true,
   },
+  plugins: [vue()],
   resolve: {
     alias: {
       '@src': fileURLToPath(new URL('./src', import.meta.url)),

@@ -18,6 +18,8 @@
     "demo:all": "node src/run.mjs --scenario all"
   },
   "devDependencies": {
-    "vite": "^5.4.11"
+    "@vitejs/plugin-vue": "*",
+    "vite": "^5.4.11",
+    "vue": "*"
   }
 }
